@@ -3,6 +3,10 @@ package fr.diginamic.recensement;
 import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
+import fr.diginamic.recensement.exceptions.CodeDptUnknownException;
+import fr.diginamic.recensement.exceptions.CodeLetterException;
+import fr.diginamic.recensement.exceptions.CodePopMinMaxInvertedException;
+import fr.diginamic.recensement.exceptions.CodePopNegativeException;
 import fr.diginamic.recensement.services.RechercheDepartementsPlusPeuplees;
 import fr.diginamic.recensement.services.RecherchePopulationBorneService;
 import fr.diginamic.recensement.services.RecherchePopulationDepartementService;
@@ -66,7 +70,13 @@ public class Application {
 				break;
 			case 4:
 				RecherchePopulationBorneService recherchePopBorne = new RecherchePopulationBorneService();
-				recherchePopBorne.traiter(recensement, scanner);
+				try {
+					recherchePopBorne.traiter(recensement, scanner);
+				} catch (CodeLetterException | CodeDptUnknownException | CodePopNegativeException
+						| CodePopMinMaxInvertedException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e);
+				}
 				break;
 			case 5:
 				RechercheVillesPlusPeupleesDepartement rechercheVillesPlusPeupleesDepartement = new RechercheVillesPlusPeupleesDepartement();
